@@ -4,6 +4,7 @@ using Ecommerce.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Ecommerce.Data.Migrations
 {
     [DbContext(typeof(DataDbContext))]
-    partial class MeuDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230321214507_Full DB")]
+    partial class FullDB
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,47 +23,6 @@ namespace Ecommerce.Data.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
-
-            modelBuilder.Entity("Ecommerce.Business.Models.Carrinho", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("ClienteId")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("ClienteId");
-
-                    b.Property<bool>("GerouPedido")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false)
-                        .HasColumnName("GerouPedido");
-
-                    b.Property<int>("Parcelas")
-                        .HasColumnType("int")
-                        .HasColumnName("Parcelas");
-
-                    b.Property<Guid>("ProdutoVariacaoId")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("ProdutoVariacaoId");
-
-                    b.Property<int>("Quantidade")
-                        .HasColumnType("int")
-                        .HasColumnName("Quantidade");
-
-                    b.Property<decimal>("Valor")
-                        .HasColumnType("decimal(18,2)")
-                        .HasColumnName("Valor");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ClienteId");
-
-                    b.HasIndex("ProdutoVariacaoId");
-
-                    b.ToTable("Carrinhos", (string)null);
-                });
 
             modelBuilder.Entity("Ecommerce.Business.Models.Categoria", b =>
                 {
@@ -492,23 +453,6 @@ namespace Ecommerce.Data.Migrations
                     b.ToTable("VendaStatus", (string)null);
                 });
 
-            modelBuilder.Entity("Ecommerce.Business.Models.Carrinho", b =>
-                {
-                    b.HasOne("Ecommerce.Business.Models.Cliente", "Cliente")
-                        .WithMany()
-                        .HasForeignKey("ClienteId")
-                        .IsRequired();
-
-                    b.HasOne("Ecommerce.Business.Models.ProdutoVariacao", "ProdutoVariacao")
-                        .WithMany()
-                        .HasForeignKey("ProdutoVariacaoId")
-                        .IsRequired();
-
-                    b.Navigation("Cliente");
-
-                    b.Navigation("ProdutoVariacao");
-                });
-
             modelBuilder.Entity("Ecommerce.Business.Models.CategoriaProduto", b =>
                 {
                     b.HasOne("Ecommerce.Business.Models.Categoria", "Categoria")
@@ -570,7 +514,7 @@ namespace Ecommerce.Data.Migrations
                         .HasForeignKey("ClienteId")
                         .IsRequired();
 
-                    b.HasOne("Ecommerce.Business.Models.ClienteEndereco", "EnderecoEntrega")
+                    b.HasOne("Ecommerce.Business.Models.Endereco", "EnderecoEntrega")
                         .WithMany()
                         .HasForeignKey("EnderecoEntregaId")
                         .IsRequired();

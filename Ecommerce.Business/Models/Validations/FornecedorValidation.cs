@@ -1,4 +1,5 @@
-﻿using Ecommerce.Business.Models.Validations.Documentos;
+﻿using Ecommerce.Business.ENUMs;
+using Ecommerce.Business.Models.Validations.Documentos;
 using FluentValidation;
 
 namespace Ecommerce.Business.Models.Validations
@@ -12,7 +13,7 @@ namespace Ecommerce.Business.Models.Validations
                 .Length(2, 100)
                 .WithMessage("O campo {PropertyName} precisa ter entre {MinLength} e {MaxLength} caracteres");
 
-            When(f => f.TipoFornecedor == TipoFornecedor.PessoaFisica, () =>
+            When(f => f.TipoFornecedor == ETipoFornecedor.PessoaFisica, () =>
             {
                 RuleFor(f => f.Documento.Length).Equal(CpfValidacao.TamanhoCpf)
                     .WithMessage("O campo Documento precisa ter {ComparisonValue} caracteres e foi fornecido {PropertyValue}.");
@@ -20,7 +21,7 @@ namespace Ecommerce.Business.Models.Validations
                     .WithMessage("O documento fornecido é inválido.");
             });
 
-            When(f => f.TipoFornecedor == TipoFornecedor.PessoaJuridica, () =>
+            When(f => f.TipoFornecedor == ETipoFornecedor.PessoaJuridica, () =>
             {
                 RuleFor(f => f.Documento.Length).Equal(CnpjValidacao.TamanhoCnpj)
                     .WithMessage("O campo Documento precisa ter {ComparisonValue} caracteres e foi fornecido {PropertyValue}.");

@@ -7,7 +7,7 @@ namespace Ecommerce.Data.Repository
 {
     public class EnderecoRepository : Repository<Endereco>, IEnderecoRepository
     {
-        public EnderecoRepository(MeuDbContext context) : base(context) { }
+        public EnderecoRepository(DataDbContext context) : base(context) { }
 
         public async Task<Endereco> ObterEnderecoPorFornecedor(Guid fornecedorId)
         {

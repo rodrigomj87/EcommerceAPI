@@ -8,20 +8,20 @@ namespace Ecommerce.Api.Configuration
         {
             services.AddElmahIo(o =>
             {
-                o.ApiKey = "388dd3a277cb44c4aa128b5c899a3106";
-                o.LogId = new Guid("c468b2b8-b35d-4f1a-849d-f47b60eef096");
+                o.ApiKey = "4771aa5d21904b9fa03ac157ccd6334b";
+                o.LogId = new Guid("fa5a7e36-4cfd-4d67-b658-b01efdc66360");
             });
 
             services.AddHealthChecks()
                 .AddElmahIoPublisher(options =>
                 {
-                    options.ApiKey = "388dd3a277cb44c4aa128b5c899a3106";
-                    options.LogId = new Guid("c468b2b8-b35d-4f1a-849d-f47b60eef096");
-                    options.HeartbeatId = "API Fornecedores";
+                    options.ApiKey = "4771aa5d21904b9fa03ac157ccd6334b";
+                    options.LogId = new Guid("fa5a7e36-4cfd-4d67-b658-b01efdc66360");
+                    options.HeartbeatId = "3be5d881d80a4f268e3e10d72854a05e";
 
                 })
                 .AddCheck("Produtos", new SqlServerHealthCheck(configuration.GetConnectionString("DefaultConnection")))
-                .AddSqlServer(configuration.GetConnectionString("DefaultConnection"), name: "BancoSQL");
+                .AddSqlServer(configuration.GetConnectionString("DefaultConnection"), name: "Ecommerce");
 
             services.AddHealthChecksUI()
                 .AddSqlServerStorage(configuration.GetConnectionString("DefaultConnection"));

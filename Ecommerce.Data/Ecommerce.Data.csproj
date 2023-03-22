@@ -16,8 +16,4 @@
     <ProjectReference Include="..\Ecommerce.Business\Ecommerce.Business.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Mappings\" />
-  </ItemGroup>
-
 </Project>

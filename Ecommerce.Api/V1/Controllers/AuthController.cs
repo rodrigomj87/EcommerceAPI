@@ -27,7 +27,6 @@ namespace Ecommerce.Api.V1.Controllers
         private readonly UserManager<IdentityUser> _userManager;
         private readonly AppSettings _appSettings;
         private readonly ILogger _logger;
-        private readonly IEmailSender _emailSender;
 
 
         public AuthController(INotificador notificador, 
@@ -35,23 +34,21 @@ namespace Ecommerce.Api.V1.Controllers
                               UserManager<IdentityUser> userManager, 
                               IOptions<AppSettings> appSettings,
                               IUser user, 
-                              ILogger<AuthController> logger,
-                              IEmailSender emailSender) : base(notificador, user)
+                              ILogger<AuthController> logger
+                              ) : base(notificador, user)
         {
             _signInManager = signInManager;
             _userManager = userManager;
             _logger = logger;
-            _emailSender = emailSender;
             _appSettings = appSettings.Value;
         }
 
-        //[HttpGet("usuarios")]
-        //[ClaimsAuthorize("Users", "Atualizar")]
-        //public async Task<IEnumerable<UserViewModel>> ListarUsuarios()
-        //{
-        //    var usuarios = await _userManager.Users.ToListAsync();
-        //    return _mapper.Map<IEnumerable<UserViewModel>>(usuarios);
-        //}
+        [HttpGet("usuarios")]
+        public async Task<IActionResult> ListarUsuarios()
+        {
+            var usuarios = await _userManager.Users.ToListAsync();
+            return Ok(usuarios);
+        }
 
 
 
@@ -96,11 +93,12 @@ namespace Ecommerce.Api.V1.Controllers
             }
             if (result.IsLockedOut)
             {
+                
                 NotificarErro("Usuário temporariamente bloqueado por tentativas inválidas");
                 return CustomResponse(loginUser);
             }
 
-            NotificarErro("Usuário ou Senha incorretos");
+            NotificarErro("Desculpe! Não foi possível realizar essa operação. Usuário ou Senha incorretos");
             return CustomResponse(loginUser);
         }
 
@@ -113,7 +111,7 @@ namespace Ecommerce.Api.V1.Controllers
 
             if (user == null)
             {
-                NotificarErro("Usuário não encontrado");
+                NotificarErro("Desculpe! Não foi possível realizar essa operação. Tente novamente.");
                 return CustomResponse(alterarSenha);
             }
 
@@ -132,36 +130,36 @@ namespace Ecommerce.Api.V1.Controllers
             return CustomResponse(alterarSenha);
         }
 
-        [HttpPost("reset-password")]
-        public async Task<IActionResult> ResetPassword(ResetPasswordViewModel model)
-        {
-            var user = await _userManager.FindByEmailAsync(model.Email);
-            if (user == null)
-            {
-                // Se o usuário não existir, ainda enviamos uma resposta bem-sucedida para evitar que um atacante determine quais endereços de e-mail estão cadastrados no sistema.
-                return Ok();
-            }
+        //[HttpPost("reset-password")]
+        //public async Task<IActionResult> ResetPassword(ResetPasswordViewModel model)
+        //{
+        //    var user = await _userManager.FindByEmailAsync(model.Email);
+        //    if (user == null)
+        //    {
+        //        // Se o usuário não existir, ainda enviamos uma resposta bem-sucedida para evitar que um atacante determine quais endereços de e-mail estão cadastrados no sistema.
+        //        return Ok();
+        //    }
 
-            // Cria um token de redefinição de senha que será enviado ao usuário por e-mail.
-            var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+        //    // Cria um token de redefinição de senha que será enviado ao usuário por e-mail.
+        //    var token = await _userManager.GeneratePasswordResetTokenAsync(user);
 
-            // Constrói o URL exclusivo de redefinição de senha que será enviado ao usuário por e-mail.
-            var resetUrl = $"{Request.Scheme}://{Request.Host}/reset-password?email={Uri.EscapeDataString(user.Email)}&token={Uri.EscapeDataString(token)}";
+        //    // Constrói o URL exclusivo de redefinição de senha que será enviado ao usuário por e-mail.
+        //    var resetUrl = $"{Request.Scheme}://{Request.Host}/reset-password?email={Uri.EscapeDataString(user.Email)}&token={Uri.EscapeDataString(token)}";
 
-            // Constrói o corpo do e-mail.
-            var message = new StringBuilder()
-                .AppendLine("Você solicitou uma redefinição de senha.")
-                .AppendLine("Por favor, clique no link abaixo para redefinir sua senha.")
-                .AppendLine()
-                .AppendLine(resetUrl)
-                .ToString();
+        //    // Constrói o corpo do e-mail.
+        //    var message = new StringBuilder()
+        //        .AppendLine("Você solicitou uma redefinição de senha.")
+        //        .AppendLine("Por favor, clique no link abaixo para redefinir sua senha.")
+        //        .AppendLine()
+        //        .AppendLine(resetUrl)
+        //        .ToString();
 
-            // Envia o e-mail ao usuário.
-            await _emailSender.SendEmailAsync(user.Email, "Redefinir senha", message);
+        //    // Envia o e-mail ao usuário.
+        //    await _emailSender.SendEmailAsync(user.Email, "Redefinir senha", message);
 
-            // Retorna uma resposta bem-sucedida.
-            return Ok();
-        }
+        //    // Retorna uma resposta bem-sucedida.
+        //    return Ok();
+        //}
 
 
 

@@ -8,10 +8,10 @@ namespace Ecommerce.Data.Repository
 {
     public abstract class Repository<TEntity> : IRepository<TEntity> where TEntity : Entity, new()
     {
-        protected readonly MeuDbContext Db;
+        protected readonly DataDbContext Db;
         protected readonly DbSet<TEntity> DbSet;
 
-        protected Repository(MeuDbContext db)
+        protected Repository(DataDbContext db)
         {
             Db = db;
             DbSet = db.Set<TEntity>();

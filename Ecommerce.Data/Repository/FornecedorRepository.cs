@@ -7,7 +7,7 @@ namespace Ecommerce.Data.Repository
 {
     public class FornecedorRepository : Repository<Fornecedor>, IFornecedorRepository
     {
-        public FornecedorRepository(MeuDbContext context) : base(context)
+        public FornecedorRepository(DataDbContext context) : base(context)
         {
         }
 

@@ -11,9 +11,22 @@ namespace Ecommerce.Data.Context
             ChangeTracker.AutoDetectChangesEnabled = false;
         }
 
-        public DbSet<Produto> Produtos { get; set; }
+        public DbSet<Carrinho> Carrinho { get; set; }
+        public DbSet<Categoria> Categorias { get; set; }
+        public DbSet<CategoriaProduto> CategoriasProdutos { get; set; }
+        public DbSet<Cidade> Cidades { get; set; }
+        public DbSet<Cliente> Clientes { get; set; }
+        public DbSet<ClienteEndereco> ClientesEnderecos { get; set; }
         public DbSet<Endereco> Enderecos { get; set; }
         public DbSet<Fornecedor> Fornecedores { get; set; }
+        public DbSet<MetodoPagamento> MetodosPagamento { get; set; }
+        public DbSet<PedidoVenda> PedidosVenda { get; set; }
+        public DbSet<PedidoVendaProduto> PedidosVendaProdutos { get; set; }
+        public DbSet<Produto> Produtos { get; set; }
+        public DbSet<ProdutoVariacao> ProdutoVariacoes { get; set; }
+        public DbSet<ProdutoVariacaoDetalhe> ProdutoVariacaoDetalhes { get; set; }
+        public DbSet<UnidadeFederacao> UnidadesFederacao { get; set; }
+        public DbSet<VendaStatus> VendaStatus { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

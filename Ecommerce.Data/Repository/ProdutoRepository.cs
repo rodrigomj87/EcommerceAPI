@@ -8,7 +8,7 @@ namespace Ecommerce.Data.Repository
 {
     public class ProdutoRepository : Repository<Produto>, IProdutoRepository
     {
-        public ProdutoRepository(MeuDbContext context) : base(context) { }
+        public ProdutoRepository(DataDbContext context) : base(context) { }
 
         public async Task<Produto> ObterProdutoFornecedor(Guid id)
         {

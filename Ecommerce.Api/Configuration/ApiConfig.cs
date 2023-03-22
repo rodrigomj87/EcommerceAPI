@@ -1,6 +1,4 @@
 ﻿using Ecommerce.Api.Extensions;
-using Ecommerce.Business.Interfaces;
-using Ecommerce.Business.Services;
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Mvc;
@@ -52,12 +50,6 @@ namespace Ecommerce.Api.Configuration
                             .AllowAnyHeader());
             });
 
-            //services.AddSingleton<IEmailSender>(new SmtpEmailSender(
-            //    configuration.GetValue<string>("SmtpSettings:Server"),
-            //    configuration.GetValue<int>("SmtpSettings:Port"),
-            //    configuration.GetValue<string>("SmtpSettings:Username"),
-            //    configuration.GetValue<string>("SmtpSettings:Password")
-            //));
 
             return services;
         }

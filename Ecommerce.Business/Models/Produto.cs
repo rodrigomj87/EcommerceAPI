@@ -13,5 +13,8 @@
 
         /* EF Relations */
         public Fornecedor Fornecedor { get; set; }
+
+        public IEnumerable<ProdutoVariacao> ProdutoVariacoes { get; set; }
+        public IEnumerable<CategoriaProduto> CategoriaProduto { get; set; }
     }
 }
