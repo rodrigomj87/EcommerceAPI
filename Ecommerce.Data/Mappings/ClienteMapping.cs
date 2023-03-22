@@ -23,6 +23,10 @@ namespace Ecommerce.Data.Mappings
                    .HasColumnType("varchar")
                    .IsRequired();
 
+            builder.Property(c => c.Telefone)
+                   .HasMaxLength(11)
+                   .HasColumnType("varchar");
+
             builder.Property(c => c.DataCadastro)
                    .HasColumnType("datetime")
                    .IsRequired();

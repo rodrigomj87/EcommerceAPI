@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Ecommerce.Data.Context
 {
-    public class MeuDbContext : DbContext
+    public class DataDbContext : DbContext
     {
-        public MeuDbContext(DbContextOptions<MeuDbContext> options) : base(options)
+        public DataDbContext(DbContextOptions<DataDbContext> options) : base(options)
         {
             ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
             ChangeTracker.AutoDetectChangesEnabled = false;
@@ -41,7 +41,7 @@ namespace Ecommerce.Data.Context
                     .Where(p => p.ClrType == typeof(decimal))))
                 property.SetColumnType("decimal(18,2)");
 
-            modelBuilder.ApplyConfigurationsFromAssembly(typeof(MeuDbContext).Assembly);
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(DataDbContext).Assembly);
 
             //Configura Delete Cascade
             foreach (var relationship in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys())) relationship.DeleteBehavior = DeleteBehavior.ClientSetNull;
